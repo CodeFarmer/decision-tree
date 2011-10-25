@@ -23,6 +23,13 @@
   (is (= {1 [{:a 1 :b 2}], 2 [{:a 2 :b 1} {:a 2 :b 2}]} (map-by :a [{:a 1 :b 2} {:a 2 :b 1} {:a 2 :b 2}])) "Should be able to partition a list of maps, using a keyword as the function argument (since this is the actual use case for decision-tree)"))
 
 
+(deftest test-all-keys
+
+  (is (= #{:a :b :c :d} (all-keys [{:a 1 :b 2} {:c 1 :d 2}])) "should deal with the simple case of completely disjoint maps")
+
+  (is (= #{:a :b :c} (all-keys [{:a 1 :b 2} {:c 1 :a 2}])) "should return each key once, when there are repeated keys"))
+
+
 ;; stealing the rspec tests from decision_tree.rb
 
 (deftest test-entropy

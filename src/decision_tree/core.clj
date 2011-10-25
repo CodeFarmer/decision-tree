@@ -31,3 +31,9 @@
             (assoc acc o (conj inputs i)) afn (rest aseq))
            (recur
             (assoc acc o [i]) afn (rest aseq)))))))
+
+(defn all-keys [aseq]
+
+  "Given a list of maps, return a set containing all the keys from those maps"
+
+  (into #{} (flatten (map keys aseq))))
