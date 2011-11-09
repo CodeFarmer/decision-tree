@@ -54,3 +54,38 @@
                          [14, "N"]]))
       "should match the value from the Mitchell book"))
 
+
+(def sample-data
+  [[{:outlook 'Sunny',    :temperature 'Hot',   :humidity  'High',   :wind  'Weak'},    'No'],
+   [{:outlook 'Sunny',    :temperature 'Hot',   :humidity  'High',   :wind  'Strong'},  'No'],
+   [{:outlook 'Overcast', :temperature  'Hot',  :humidity  'High',   :wind  'Weak'},   'Yes'],
+   [{:outlook 'Rain',     :temperature  'Mild', :humidity  'High',   :wind  'Weak'},   'Yes'],
+   [{:outlook 'Rain',     :temperature  'Cool', :humidity  'Normal', :wind  'Weak'},   'Yes'],
+   [{:outlook 'Rain',     :temperature  'Cool', :humidity  'Normal', :wind  'Strong'}, 'No'],
+   [{:outlook 'Overcast', :temperature  'Cool', :humidity  'Normal', :wind  'Strong'}, 'Yes'],
+   [{:outlook 'Sunny',    :temperature  'Mild', :humidity  'High',   :wind  'Weak'},   'No'],
+   [{:outlook 'Sunny',    :temperature  'Cool', :humidity  'Normal', :wind  'Weak'},   'Yes'],
+   [{:outlook 'Rain',     :temperature  'Mild', :humidity  'Normal', :wind  'Weak'},   'Yes'],
+   [{:outlook 'Sunny',    :temperature  'Mild', :humidity  'Normal', :wind  'Strong'}, 'Yes'],
+   [{:outlook 'Overcast', :temperature  'Mild', :humidity  'High',   :wind  'Strong'}, 'Yes'],
+   [{:outlook 'Overcast', :temperature  'Hot',  :humidity  'Normal', :wind  'Weak'},   'Yes'],
+   [{:outlook 'Rain',     :temperature  'Mild', :humidity  'High',   :wind  'Strong'}, 'No']]
+)
+
+(deftest test-gain
+  
+  (is (within? 0.0005 0.247 (gain :outlook sample-data)) "should return 0.247 for :outlook given the sample data")
+
+  (is (within? 0.0005 0.152 (gain :humidity sample-data)) "should return 0.152 for :humidity given the sample data")
+
+  (is (within? 0.0005 0.048 (gain :wind sample-data)) "should return 0.048 for :wind")
+
+  (is (within? 0.0005 0.029 (gain :temperature sample-data)) "should return 0.029 for :temperature"))
+
+(deftest test-most-informative-key
+
+  (is (= :outlook (most-informative-key sample-data)) "should return :outlook as the first choice"))
+
+(comment
+  (deftest test-build
+    (is (= 1 0))))
