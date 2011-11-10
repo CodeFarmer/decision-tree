@@ -37,3 +37,19 @@
   "Given a list of maps, return a set containing all the keys from those maps"
 
   (into #{} (flatten (map keys aseq))))
+
+(defn gain
+  ([k alist]
+
+     "Given a key and a list of pairs of (map, output), return the net reduction in entropy caused by partitioning the list according to the values associated with key in the input maps"
+               
+     (gain (entropy alist) k alist))
+
+  ([current-entropy k alist]
+     (let [parts (vals (map-by #(k (first %)) alist))]
+       (- current-entropy
+          (reduce +
+           (map #(* (entropy %) (/ (count %) (count alist))) parts))))))
+
+(defn most-informative-key [aseq]
+  nil)
