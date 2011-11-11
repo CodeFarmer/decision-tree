@@ -10,7 +10,7 @@
   (let [n (count alist)
         counts (vals (frequencies (map #(nth % 1) alist)))]
     
-    (apply + (map #(* (- %) (log2 %)) (map #(/ % n) counts)))))
+    (reduce + (map #(* (- %) (log2 %)) (map #(/ % n) counts)))))
 
 
 (defn map-by
