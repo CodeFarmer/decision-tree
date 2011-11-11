@@ -52,4 +52,5 @@
            (map #(* (entropy %) (/ (count %) (count alist))) parts))))))
 
 (defn most-informative-key [aseq]
-  nil)
+  "Given a sequence of pairs of (map, output), return the map key that provides the highest information gain about outout, when used to partition the sequence"
+  (apply max-key #(gain % aseq) (all-keys (map first aseq))))
