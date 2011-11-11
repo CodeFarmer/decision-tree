@@ -15,15 +15,15 @@
   (is (= 2.0 (log2 4))))
 
 
-(deftest test-partition-by
+(deftest test-partition-map
 
-  (is (= {} (partition-by identity [])) "should return an empty map when the input seq is empty")
+  (is (= {} (partition-map identity [])) "should return an empty map when the input seq is empty")
 
-  (is (= {:a [:a], :b [:b], :c [:c]} (partition-by identity [:a :b :c])) "should return a map of x to a list containing each of x, for each member of a seq with no repeats when passed the identity function")
+  (is (= {:a [:a], :b [:b], :c [:c]} (partition-map identity [:a :b :c])) "should return a map of x to a list containing each of x, for each member of a seq with no repeats when passed the identity function")
 
-  (is (= {:a [:a :a], :b [:b]} (partition-by identity [:a :a :b])) "should return a map of x followed by the repeated elements, for a seq with repeats and the identity function")
+  (is (= {:a [:a :a], :b [:b]} (partition-map identity [:a :a :b])) "should return a map of x followed by the repeated elements, for a seq with repeats and the identity function")
 
-  (is (= {1 [{:a 1 :b 2}], 2 [{:a 2 :b 1} {:a 2 :b 2}]} (partition-by :a [{:a 1 :b 2} {:a 2 :b 1} {:a 2 :b 2}])) "Should be able to partition a list of maps, using a keyword as the function argument (since this is the actual use case for decision-tree)"))
+  (is (= {1 [{:a 1 :b 2}], 2 [{:a 2 :b 1} {:a 2 :b 2}]} (partition-map :a [{:a 1 :b 2} {:a 2 :b 1} {:a 2 :b 2}])) "Should be able to partition a list of maps, using a keyword as the function argument (since this is the actual use case for decision-tree)"))
 
 
 (deftest test-all-keys

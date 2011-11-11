@@ -18,13 +18,13 @@
     (reduce + (map #(* (- %) (log2 %)) (map #(/ % n) counts)))))
 
 
-(defn partition-by
+(defn partition-map
   
-  ([afn aseq]
-     
-     "Given function and a seq, return a map of values the function can take when using members of the seq as an argument, to sub-seqs containing the parts of seq corresponding to those outputs"
+   "Given function and a seq, return a map of values the function can take when using members of the seq as an argument, to sub-seqs containing the parts of seq corresponding to those outputs"
 
-     (partition-by {} afn aseq))
+  ([afn aseq]     
+
+     (partition-map {} afn aseq))
 
   ([acc afn aseq]
 
@@ -54,7 +54,7 @@
      (gain (entropy alist) k alist))
 
   ([current-entropy k alist]
-     (let [parts (vals (partition-by #(k (first %)) alist))]
+     (let [parts (vals (partition-map #(k (first %)) alist))]
        (- current-entropy
           (reduce +
            (map #(* (entropy %) (/ (count %) (count alist))) parts))))))
@@ -88,7 +88,7 @@
   (if (zero? (entropy aseq))
     (nth (first aseq) 1)
     (let [k (most-informative-key aseq)]
-      [k (map-vals (partition-by #(k (first %)) aseq) build-decision-tree)])))
+      [k (map-vals (partition-map #(k (first %)) aseq) build-decision-tree)])))
 
 
 (defn tree-decide [tree input-map]
