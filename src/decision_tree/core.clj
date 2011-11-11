@@ -65,3 +65,31 @@
   "Given a sequence of pairs of (map, output), return the map key that provides the highest information gain about outout, when used to partition the sequence"
 
   (apply max-key #(gain % aseq) (all-keys (map first aseq))))
+
+
+(defn map-vals
+  
+  ([amap fn]
+     "Apply fn to each of the values in amap, and return a map associating those keys with the new values"
+
+     (map-vals {} amap fn))
+
+  ([acc amap fn]
+
+     (if (empty? amap)
+       acc
+       (let [[k v] (first amap)]
+         (recur (assoc acc k (fn v)) (rest amap) fn)))))
+
+(defn build-decision-tree [aseq]
+
+  "A decision tree is either: a pair consisting an input-map key, followed by a map of values to further trees, or a leaf node: a result (an output, in the language of the rest of this library). aseq should be a sequence of pairs of [input-map, output]. Returns nil if the seq is empty."
+
+  (if (zero? (entropy aseq))
+    (nth (first aseq) 1)
+    (let [k (most-informative-key aseq)]
+      [k (map-vals (map-by #(k (first %)) aseq) build-decision-tree)])))
+
+(defn tree-decide [tree input-map]
+  nil)
+
