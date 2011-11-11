@@ -1,4 +1,38 @@
+Small, general (map-based) decision tree concept learning library for
+Clojure.
 
+Example:
+
+user> (use 'decision-tree.core)
+
+nil
+
+user> (def sample-data
+
+  [[{:outlook "Sunny",    :temperature "Hot",   :humidity  "High",   :wind  "Weak"},    "No"],
+   [{:outlook "Sunny",    :temperature "Hot",   :humidity  "High",   :wind  "Strong"},  "No"],
+   [{:outlook "Overcast", :temperature  "Hot",  :humidity  "High",   :wind  "Weak"},   "Yes"],
+   [{:outlook "Rain",     :temperature  "Mild", :humidity  "High",   :wind  "Weak"},   "Yes"],
+   [{:outlook "Rain",     :temperature  "Cool", :humidity  "Normal", :wind  "Weak"},   "Yes"],
+   [{:outlook "Rain",     :temperature  "Cool", :humidity  "Normal", :wind  "Strong"}, "No"],
+   [{:outlook "Overcast", :temperature  "Cool", :humidity  "Normal", :wind  "Strong"}, "Yes"],
+   [{:outlook "Sunny",    :temperature  "Mild", :humidity  "High",   :wind  "Weak"},   "No"],
+   [{:outlook "Sunny",    :temperature  "Cool", :humidity  "Normal", :wind  "Weak"},   "Yes"],
+   [{:outlook "Rain",     :temperature  "Mild", :humidity  "Normal", :wind  "Weak"},   "Yes"],
+   [{:outlook "Sunny",    :temperature  "Mild", :humidity  "Normal", :wind  "Strong"}, "Yes"],
+   [{:outlook "Overcast", :temperature  "Mild", :humidity  "High",   :wind  "Strong"}, "Yes"],
+   [{:outlook "Overcast", :temperature  "Hot",  :humidity  "Normal", :wind  "Weak"},   "Yes"],
+   [{:outlook "Rain",     :temperature  "Mild", :humidity  "High",   :wind  "Strong"}, "No"]]
+)
+
+#'user/sample-data
+
+user> (build-decision-tree sample-data)
+[:outlook {"Sunny" [:humidity {"High" "No", "Normal" "Yes"}], "Overcast" "Yes", "Rain" [:wind {"Weak" "Yes", "Strong" "No"}]}]
+
+user> (tree-decide (build-decision-tree sample-data) {:outlook "Sunny", :temperature "Hot", :humidity "High", :wind  "Weak"})
+
+"No"
 
 ## License
 
